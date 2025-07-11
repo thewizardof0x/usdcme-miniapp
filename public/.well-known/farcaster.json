@@ -1,0 +1,35 @@
+{
+  "accountAssociation": {
+    "header": "PLACEHOLDER_HEADER",
+    "payload": "eyJkb21haW4iOiJ1c2RjbWUueHl6In0",
+    "signature": "PLACEHOLDER_SIGNATURE"
+  },
+  "frame": {
+    "version": "1",
+    "name": "USDCme",
+    "iconUrl": "https://usdcme.xyz/usdcme-logo.png",
+    "homeUrl": "https://usdcme.xyz",
+    "subtitle": "what goes around comes around",
+    "description": "experimental USDC tipping app",
+    "primaryCategory": "finance",
+    "screenshotUrls": [
+      "https://usdcme.xyz/api/image"
+    ],
+    "imageUrl": "https://usdcme.xyz/api/image",
+    "heroImageUrl": "https://usdcme.xyz/api/image",
+    "splashImageUrl": "https://www.usdcme.xyz/api/splash",
+    "splashBackgroundColor": "#4A9EE2",
+    "tags": [
+      "social",
+      "tipping",
+      "tip",
+      "experiment"
+    ],
+    "tagline": "what goes around comes around",
+    "buttonTitle": "Open MiniApp",
+    "ogTitle": "USDCme - MiniApp Tipping",
+    "ogDescription": "USDCme - MiniApp Tipping",
+    "ogImageUrl": "https://usdcme.xyz/api/image",
+    "webhookUrl": "https://api.example.com/webhook"
+  }
+}
