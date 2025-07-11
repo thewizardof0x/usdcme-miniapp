@@ -5,8 +5,6 @@ export const runtime = "edge"
 
 export async function GET(request: NextRequest) {
   try {
-    const logoUrl = new URL("/images/usdcme-logo.png", request.url).toString()
-
     return new ImageResponse(
       <div
         style={{
@@ -15,17 +13,11 @@ export async function GET(request: NextRequest) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%)", // Keeping original dark background for icon.ico
-          borderRadius: "200px",
+          background: "#282860", // Solid dark blue background
+          borderRadius: "150px", // Rounded corners for the square icon
         }}
       >
-        <img
-          src={logoUrl || "/placeholder.svg"}
-          alt="USDCme Logo"
-          width={400}
-          height={400}
-          style={{ borderRadius: "40px" }}
-        />
+        {/* No content needed inside, as it's a solid color icon */}
       </div>,
       {
         width: 1024,
