@@ -5,23 +5,37 @@ export const runtime = "edge"
 
 export async function GET(request: NextRequest) {
   try {
-    const logoUrl = new URL("/images/usdcme-logo.png", request.url).toString()
+    // The blue color from your provided icon image
+    const iconBlue = "#4A90E2"
 
     return new ImageResponse(
-      <img
-        src={logoUrl || "/placeholder.svg"}
-        alt="USDCme Logo"
-        width={1024} // Ensure the image fills the entire 1024x1024 canvas
-        height={1024}
-        style={{ objectFit: "contain" }} // Use 'contain' to ensure the entire image is visible within the bounds
-      />,
+      <div
+        style={{
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: iconBlue, // Set background to the exact blue of your icon
+          borderRadius: "100px", // Rounded corners for the overall icon shape
+        }}
+      >
+        <div
+          style={{
+            fontSize: "600px", // Make the emoji large to fill the icon space
+            lineHeight: "1",
+          }}
+        >
+          🔄
+        </div>
+      </div>,
       {
         width: 1024,
         height: 1024,
       },
     )
   } catch (e: any) {
-    console.log(`${e.message}`)
+    console.log(`Error generating icon: ${e.message}`)
     return new Response(`Failed to generate the image`, {
       status: 500,
     })
