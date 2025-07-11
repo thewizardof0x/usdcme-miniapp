@@ -1,8 +1,8 @@
 {
   "accountAssociation": {
-    "header": "PLACEHOLDER_HEADER",
+    "header": "eyJmaWQiOjExNTExMTksInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMjJjYjIxYWI0MWIxN2MyUmpDNllRdWV4In0",
     "payload": "eyJkb21haW4iOiJ1c2RjbWUueHl6In0",
-    "signature": "PLACEHOLDER_SIGNATURE"
+    "signature": "MHhnMTVmMzM1QTdmMVQTdmVlZZJd"
   },
   "frame": {
     "version": "1",
