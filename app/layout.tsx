@@ -47,6 +47,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <footer className="w-full border-t bg-background p-4 text-center text-sm text-muted-foreground">
+  <a
+    href="https://www.herd.eco"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="underline hover:text-primary"
+  >
+    <p>Powered by Herd - Fork Yours Here!</p>
+  </a>
+</footer>
       <body className={inter.className}>{children}</body>
     </html>
   )
