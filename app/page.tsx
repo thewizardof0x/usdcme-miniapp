@@ -12,6 +12,7 @@ function AppContent() {
   const [isAppReady, setIsAppReady] = useState(false)
   const [selectedExecutionId, setSelectedExecutionId] = useState<string>()
   const [refreshTrigger, setRefreshTrigger] = useState(0)
+  const [isUSDCStepCompleted, setIsUSDCStepCompleted] = useState(false)
   const { address, isConnected } = useAccount()
   const { connect } = useConnect()
 
@@ -48,6 +49,7 @@ function AppContent() {
   }, [isAppReady, isConnected, connect])
 
   const handleStepComplete = () => {
+    setIsUSDCStepCompleted(true)
     setRefreshTrigger((prev) => prev + 1)
   }
 
@@ -106,7 +108,7 @@ function AppContent() {
 
       {/* USDC Step */}
       <USDCStep
-        isCompleted={false}
+        isCompleted={isUSDCStepCompleted}
         isEnabled={isConnected}
         onComplete={handleStepComplete}
         executionId={selectedExecutionId}
