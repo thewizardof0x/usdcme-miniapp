@@ -175,7 +175,7 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
             <div className="card-title">USDC Sent! 🔄</div>
             <span className="badge badge-secondary ml-auto">Completed</span>
           </div>
-          <div className="card-description">The circle is complete! Thanks for testing USDCme</div>
+          <div className="card-description">Ahh... the circle of USDC... Thanks for testing USDCme!</div>
         </div>
       </div>
     )
