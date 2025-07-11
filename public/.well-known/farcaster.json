@@ -17,7 +17,7 @@
     ],
     "imageUrl": "https://usdcme.xyz/api/image",
     "heroImageUrl": "https://usdcme.xyz/api/image",
-    "splashImageUrl": "https://www.usdcme.xyz/api/splash",
+    "splashImageUrl": "https://usdcme.xyz/api/splash",
     "splashBackgroundColor": "#4A9EE2",
     "tags": [
       "social",
@@ -30,6 +30,5 @@
     "ogTitle": "USDCme - MiniApp Tipping",
     "ogDescription": "USDCme - MiniApp Tipping",
     "ogImageUrl": "https://usdcme.xyz/api/image",
-    "webhookUrl": "https://api.example.com/webhook"
   }
 }
