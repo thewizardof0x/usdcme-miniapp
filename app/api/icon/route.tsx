@@ -6,29 +6,15 @@ export const runtime = "edge"
 export async function GET(request: NextRequest) {
   try {
     const logoUrl = new URL("/images/usdcme-logo.png", request.url).toString()
-    // The blue color from the provided icon image
-    const iconBlue = "#4A90E2"
 
     return new ImageResponse(
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: iconBlue, // Set background to the blue of the icon
-          borderRadius: "100px", // Rounded corners for the overall icon shape
-        }}
-      >
-        <img
-          src={logoUrl || "/placeholder.svg"}
-          alt="USDCme Logo"
-          width={800} // Adjust size to fill the icon canvas appropriately
-          height={800}
-          style={{ borderRadius: "0px" }} // The source image already has rounding, so no additional rounding needed here
-        />
-      </div>,
+      <img
+        src={logoUrl || "/placeholder.svg"}
+        alt="USDCme Logo"
+        width={1024} // Ensure the image fills the entire 1024x1024 canvas
+        height={1024}
+        style={{ objectFit: "contain" }} // Use 'contain' to ensure the entire image is visible within the bounds
+      />,
       {
         width: 1024,
         height: 1024,
