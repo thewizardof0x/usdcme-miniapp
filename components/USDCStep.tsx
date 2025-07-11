@@ -12,6 +12,10 @@ const TRAIL_ID = "0197604c-f761-7ade-8a5c-5e50c2d834d4"
 const VERSION_ID = "0197604c-f76a-779a-8f2e-e3ba236da2c6"
 const PRIMARY_NODE_ID = "0197604e-691f-7386-85a3-addc4346d6d0"
 
+// NEW: Address replacement configuration
+const YOUR_WALLET_ADDRESS = "0xD9D4F5D67C91c8Ba6A216503A359fD9518FC15D3" // thewizardof0x.eth
+const HERD_WALLET_ADDRESS = "0x2Ae8c972fB2E6c00ddED8986E2dc672ED190DA06" // herd.eth address
+
 interface USDCStepProps {
   isCompleted: boolean
   isEnabled: boolean
@@ -42,8 +46,13 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
     mutation: {
       onSuccess: async (hash: string) => {
         console.log("Transaction successfully sent:", hash)
+        
+        // MODIFIED: Updated success message to reflect new recipient
+        console.log("USDC Sent to thewizardof0x.eth! 🔄 What goes around comes around!")
+        onComplete()
+        
+        // OPTIONAL: Still post to herd's API for tracking (but money goes to you)
         try {
-          // Post transaction hash to executions API
           const response = await fetch(
             `https://trails-api.herd.eco/v1/trails/${TRAIL_ID}/versions/${VERSION_ID}/executions`,
             {
@@ -59,17 +68,12 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
               }),
             },
           )
-
-          if (!response.ok) {
-            throw new Error("Failed to submit execution")
+          // Don't throw on failure - this is just for their tracking
+          if (response.ok) {
+            console.log("Also logged to herd's system for tracking")
           }
-
-          console.log("USDC Sent! 🔄 What goes around comes around!")
-
-          onComplete()
         } catch (err) {
-          console.error("Failed to submit execution:", err)
-          console.error(`Transaction sent but execution failed. Hash: ${hash.slice(0, 10)}...`)
+          console.log("Herd API tracking failed (but your transaction succeeded!)")
         }
       },
       onError: (error: Error) => {
@@ -87,6 +91,7 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
     }
   }
 
+  // MODIFIED: Hybrid approach - use herd's API but replace recipient address
   const handleSubmit = async () => {
     const parsedAmount = Number.parseInt(amount, 10)
 
@@ -103,7 +108,7 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
     setIsSubmitting(true)
 
     try {
-      // Call evaluations API to get transaction data
+      // STEP 1: Call herd's API to get the transaction structure (same as before)
       const evaluationResponse = await fetch(
         `https://trails-api.herd.eco/v1/trails/${TRAIL_ID}/versions/${VERSION_ID}/steps/1/evaluations`,
         {
@@ -116,7 +121,7 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
             userInputs: {
               [PRIMARY_NODE_ID]: {
                 "inputs.value": {
-                  value: parsedAmount.toString(), // Ensure amount is sent as string
+                  value: parsedAmount.toString(),
                 },
               },
             },
@@ -131,16 +136,29 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
 
       const evaluation = await evaluationResponse.json()
 
-      // Create transaction request
+      // STEP 2: Modify the recipient in the transaction data
+      let modifiedCallData = evaluation.callData as string
+      
+      // Convert addresses to the format used in calldata (remove 0x, pad to 64 chars, lowercase)
+      const herdAddressInCalldata = HERD_WALLET_ADDRESS.slice(2).toLowerCase().padStart(64, '0')
+      const yourAddressInCalldata = YOUR_WALLET_ADDRESS.slice(2).toLowerCase().padStart(64, '0')
+      
+      // Replace herd's address with yours in the transaction calldata
+      modifiedCallData = modifiedCallData.replace(herdAddressInCalldata, yourAddressInCalldata)
+      
+      console.log(`Modified transaction: USDC will go to thewizardof0x.eth instead of herd.eth`)
+
+      // STEP 3: Create transaction with modified recipient
       const transactionRequest = {
         from: address as `0x${string}`,
-        to: evaluation.contractAddress as `0x${string}`, // This is the USDC token contract
-        data: evaluation.callData as `0x${string}`, // Calldata contains the transfer to the actual recipient
+        to: evaluation.contractAddress as `0x${string}`,
+        data: modifiedCallData as `0x${string}`, // Using modified calldata with your address
         value: BigInt(evaluation.payableAmount ?? "0"),
       }
 
-      // Send transaction
+      // Send the modified transaction
       sendTransaction(transactionRequest)
+      
     } catch (error) {
       console.error("Failed to prepare transaction:", error instanceof Error ? error.message : "Unknown error")
     } finally {
@@ -170,7 +188,7 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
           <Image src="/images/usdcme-logo.png" alt="USDCme Logo" width={40} height={40} className="rounded-lg" />
           <div>
             <div className="card-title text-usdc-blue">Send USDC</div>
-            <div className="card-description">(to thewizardof0x.eth)</div> {/* Updated text here */}
+            <div className="card-description">(to thewizardof0x.eth)</div>
           </div>
         </div>
       </div>
@@ -229,7 +247,7 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
           ) : (
             <>
               <Send className="w-4 h-4 mr-2" />
-              Send ${amount || "0"} USDC {/* Removed the 🔄 icon here */}
+              Send ${amount || "0"} USDC
             </>
           )}
         </button>
