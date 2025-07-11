@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
             maxWidth: "400px",
           }}
         >
-          Experimental circular USDC tipping
+          Experimental USDC tipping
         </div>
 
         <div
