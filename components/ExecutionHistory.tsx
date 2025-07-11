@@ -226,7 +226,7 @@ export function ExecutionHistory({ onExecutionSelect, selectedExecutionId, onRef
           <Users className="w-5 h-5 text-usdc-blue" />
           <div className="card-title">Community Activity</div>
         </div>
-        <div className="card-description">See who else is testing (derivatives of) USDCme</div>
+        <div className="card-description">See who else is testing (derivatives of) USDCme.xyz</div>
         <div className="card-content">
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="text-center p-3 rounded-lg" style={{ backgroundColor: "var(--usdc-blue-light)" }}>
