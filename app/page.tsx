@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { useAccount, useConnect } from "wagmi"
 import { sdk } from "@farcaster/miniapp-sdk"
@@ -20,11 +19,18 @@ function AppContent() {
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        // Auto-connect to Farcaster
+        // FIXED: Simplified auto-connect with better error handling
         if (!isConnected) {
-          connect({ connector: (await import("@/components/Web3Provider")).config.connectors[0] })
+          try {
+            const { config } = await import("@/components/Web3Provider")
+            if (config.connectors && config.connectors.length > 0) {
+              connect({ connector: config.connectors[0] })
+            }
+          } catch (error) {
+            console.log("Auto-connect failed, user can connect manually:", error)
+          }
         }
-
+        
         // Mark app as ready for Farcaster
         await sdk.actions.ready()
         setIsAppReady(true)
@@ -34,7 +40,7 @@ function AppContent() {
         setIsAppReady(true) // Still mark as ready to prevent infinite loading
       }
     }
-
+    
     if (!isAppReady) {
       const timer = setTimeout(initializeApp, 100)
       return () => clearTimeout(timer)
@@ -99,60 +105,18 @@ function AppContent() {
       </div>
 
       {/* USDC Step */}
-      {isConnected ? (
-        <USDCStep
-          isCompleted={false}
-          isEnabled={true}
-          onComplete={handleStepComplete}
-          executionId={selectedExecutionId}
-        />
-      ) : (
-        <div className="card opacity-50">
-          <div className="card-content text-center py-8">
-            <Image
-              src="/images/usdcme-logo.png"
-              alt="USDCme Logo"
-              width={60}
-              height={60}
-              className="mx-auto mb-2 rounded-xl opacity-50"
-            />
-            <p className="text-muted-foreground">connect your wallet to tip me in USDC</p>
-          </div>
-        </div>
-      )}
+      <USDCStep
+        isCompleted={false}
+        isEnabled={isConnected}
+        onComplete={handleStepComplete}
+        executionId={selectedExecutionId}
+      />
 
       {/* Execution History */}
-      {isConnected && (
-        <ExecutionHistory
-          onExecutionSelect={setSelectedExecutionId}
-          selectedExecutionId={selectedExecutionId}
-          onRefresh={refreshTrigger > 0 ? () => {} : undefined}
-        />
-      )}
-
-      {/* Footer */}
-      <div
-        className="fixed bottom-0 left-0 right-0"
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          backdropFilter: "blur(5px)",
-          WebkitBackdropFilter: "blur(5px)",
-          borderTop: "1px solid rgba(112, 167, 210, 0.2)",
-          padding: "8px",
-        }}
-      >
-        <div className="text-center">
-          <a
-            href="https://herd.eco/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-usdc-blue"
-            style={{ textDecoration: "none" }}
-          >
-            Powered by Herd - Fork Yours Here!
-          </a>
-        </div>
-      </div>
+      <ExecutionHistory
+        refreshTrigger={refreshTrigger}
+        onExecutionSelect={setSelectedExecutionId}
+      />
     </div>
   )
 }
