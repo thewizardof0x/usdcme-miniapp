@@ -7,7 +7,7 @@
   "frame": {
     "version": "1",
     "name": "USDCme",
-    "iconUrl": "https://usdcme.xyz/usdcme-logo.png",
+    "iconUrl": "https://usdcme.xyz/api/image",
     "homeUrl": "https://usdcme.xyz",
     "subtitle": "what goes around comes around",
     "description": "experimental USDC tipping app",
