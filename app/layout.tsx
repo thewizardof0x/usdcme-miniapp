@@ -6,7 +6,7 @@ import "./globals.css" // This line is crucial for global styles
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "USDCme - Experimental Circular Tipping",
+  title: "USDCme - Experimental Tipping",
   description: "What goes around comes around - experimental USDC tipping app",
   other: {
     "fc:miniapp": JSON.stringify({
