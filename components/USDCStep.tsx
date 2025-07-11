@@ -170,7 +170,7 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
           <Image src="/images/usdcme-logo.png" alt="USDCme Logo" width={40} height={40} className="rounded-lg" />
           <div>
             <div className="card-title text-usdc-blue">Send USDC</div>
-            <div className="card-description">Testing circular tipping - what goes around comes around!</div>
+            <div className="card-description">(to thewizardof0x.eth)</div> {/* Updated text here */}
           </div>
         </div>
       </div>
@@ -229,7 +229,7 @@ export function USDCStep({ isCompleted, isEnabled, onComplete, executionId }: US
           ) : (
             <>
               <Send className="w-4 h-4 mr-2" />
-              Send ${amount || "0"} USDC 🔄
+              Send ${amount || "0"} USDC {/* Removed the 🔄 icon here */}
             </>
           )}
         </button>
