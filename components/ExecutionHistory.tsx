@@ -139,8 +139,8 @@ export function ExecutionHistory({ onExecutionSelect, selectedExecutionId, onRef
         </div>
         <div className="card-description">Your previous USDC transactions</div>
         <div className="text-xs text-muted-foreground px-6 pb-2">
-  email usdcme@usdcme.xyz for support
-</div>
+          email usdcme@usdcme.xyz for support
+        </div>
         <div className="card-content">
           {!userExecutions || userExecutions.executions.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
