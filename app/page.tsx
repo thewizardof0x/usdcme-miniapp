@@ -149,7 +149,7 @@ function AppContent() {
             className="text-xs text-usdc-blue"
             style={{ textDecoration: "none" }}
           >
-            Built with v0 and Powered by Herd
+            Powered by Herd - Fork Yours Here!
           </a>
         </div>
       </div>
