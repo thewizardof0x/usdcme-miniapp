@@ -7,7 +7,7 @@
   "miniapp": {
     "version": "1",
     "name": "USDCme",
-    "iconUrl": "https://usdcme.xyz/api/image",
+    "iconUrl": "https://usdcme.xyz/api/splash",
     "homeUrl": "https://usdcme.xyz",
     "description": "experimental USDC tipping app",
     "imageUrl": "https://usdcme.xyz/api/image",
